@@ -34,7 +34,9 @@ class handWindow extends PApplet {
   }
   void draw() {
     background(themePrimary);
-    image(hands[hand.gesture], 0, 0);
+    if (hand.gesture >= 0) {
+      image(hands[hand.gesture], 0, 0);
+    }
   }
   void update() {
     if (settings.showGesture == false) {

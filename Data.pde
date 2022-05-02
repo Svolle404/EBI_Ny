@@ -1,4 +1,8 @@
 class data {
+  int time = 0;
+  int px = 0;
+  int py = 0;
+
   void load() {
     String[] data = loadStrings("C:/Users/Berith Svoldgade/PycharmProjects/pythonProject/data.txt");
     if (data.length > 4) {
@@ -7,6 +11,12 @@ class data {
       int[] finger3 = int(split(data[2], ' '));
       int[] finger4 = int(split(data[3], ' '));
       int[] finger5 = int(split(data[4], ' '));
+
+      if (millis() > time+100) {
+        time = millis();
+        px = hand.landmarks[1][0];
+        py = hand.landmarks[1][1];
+      }
 
       hand.landmarks[0][0] = finger1[0];
       hand.landmarks[0][1] = finger1[1];

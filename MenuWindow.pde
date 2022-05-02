@@ -74,6 +74,8 @@ class menuWindow extends PApplet {
             tutorialW.getSurface().setVisible(true);
             tutorialW.start();
             tutorialW.running = true;
+            tutorialW.time = 0;
+            tutorialW.step = 0;
             settingsW.getSurface().setVisible(false);
             settingsW.stop();
             settingsW.running = false;

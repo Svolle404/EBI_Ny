@@ -25,6 +25,7 @@ PImage logo;
 PImage checkmark;
 PFont light;
 PFont medium;
+PFont lightLarge;
 
 color themePrimary = color(60);
 color themeSecondary = color(136);
@@ -34,21 +35,25 @@ color text = color(255);
 void setup() {
   logo = loadImage("logo.png");
   light = createFont("/fonts/light.otf", 32);
+  lightLarge = createFont("/fonts/light.otf", 64);
   medium = createFont("/fonts/medium.otf", 64);
   surface.setVisible(false);
   String[] args = {""};
   settings = new settings();
   settings.load();
-  handW = new handWindow();
+  handW = new handWindow(); 
   menuW = new menuWindow();
   tutorialW = new tutorialWindow();
   settingsW = new settingsWindow();
-  keyboardW = new keyboardWindow();
+  keyboardW = new keyboardWindow();   
   data = new data();
   hand = new hand();
   computer = new computer();
   for (int i = 0; i < handW.hands.length; i++) {
     handW.hands[i] = loadImage("/images/"+i+".png");
+  }
+  for (int i = 0; i < tutorialW.handsHD.length; i++) {
+    tutorialW.handsHD[i] = loadImage("/images/hd/"+i+".png");
   }
   PApplet.runSketch(args, handW);
   PApplet.runSketch(args, menuW);
@@ -60,9 +65,13 @@ void setup() {
   } 
   catch (Throwable e) {
   }
-  tutorialW.getSurface().setVisible(false);
-  tutorialW.stop();
-  tutorialW.running = false;
+  if (settings.returningUser) {
+    tutorialW.getSurface().setVisible(false);
+    tutorialW.stop();
+    tutorialW.running = false;
+    settings.returningUser = true;
+    settings.save();
+  }
   settingsW.getSurface().setVisible(false);
   settingsW.stop();
   settingsW.running = false;

@@ -10,7 +10,11 @@ class hand {
   int gesture = 0;
 
   void pointer() {
-    gesture = 0;
+    gesture = -1;
+
+    if (landmarks[1][1] < landmarks[0][1]-60 && landmarks[2][1] < landmarks[0][1]-60 && landmarks[3][1] < landmarks[0][1]-60 && landmarks[4][1] < landmarks[0][1]-40) {
+      gesture = 0;
+    }
 
     if (landmarks[1][1] < landmarks[2][1]-80 && landmarks[1][1] < landmarks[3][1]-80 && landmarks[1][1] < landmarks[4][1]-80) {
       x = lerp(x, landmarks[1][0], 0.1);
