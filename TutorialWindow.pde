@@ -9,8 +9,10 @@ class tutorialWindow extends PApplet {
   int timeTemp = 0;
   int counter = 0;
   int scrollCounter = 0;
-  boolean ready = true;
+  boolean ready = false;
   float progress = 0;
+  PVector boxPos = new PVector(720, 316);
+  boolean follow = false;
 
   PSurface initSurface() {
     PSurface pSurface = super.initSurface();
@@ -59,14 +61,14 @@ class tutorialWindow extends PApplet {
         textFont(light, 32);
         text("The neutral position is used to make sure the program doesn't register unwanted inputs. Try try doing the neutral gesture for 10 seconds.", width/2+10, 10, 460, 460);
 
-        //if (hand.gesture == 0 && ready) {
-        //  startTime = millis();
-        //  ready = false;
-        //}
+        if (hand.gesture == 0 && ready) {
+          startTime = millis();
+          ready = false;
+        }
 
-        //if (hand.gesture != 0 && !ready) {
-        //  ready = true;
-        //}
+        if (hand.gesture != 0 && !ready) {
+          ready = true;
+        }
 
         if (hand.gesture == 0) {
           int timeTemp = millis()-startTime;
@@ -225,6 +227,20 @@ class tutorialWindow extends PApplet {
         textAlign(LEFT, TOP);
         textFont(light, 32);
         text("To click and drag you have to raise your pointer and pinky finger, and lower your ring and middle finger. Try dragging the box below around.", width/2+10, 10, 460, 460);
+
+        noStroke();
+        fill(themeTertiary);
+        rect(width/2+10, height-260, 460, 192, 5);
+
+        if (mousePressed && follow) {
+          boxPos.set(mouseX, mouseY);
+        }
+
+        boxPos.x = constrain(boxPos.x, width/2+60, width-60);
+        boxPos.y = constrain(boxPos.y, height-210, 362);
+
+        fill(text);
+        rect(boxPos.x-50, boxPos.y-50, 100, 100, 5);
       }
 
       noStroke();
@@ -239,6 +255,9 @@ class tutorialWindow extends PApplet {
           progress = 0;
           counter = 0;
           scrollCounter = 0;
+          ready = false;
+          startTime = millis();
+          boxPos = new PVector(720, 316);
         }
       } else {
         fill(themeTertiary);
@@ -252,6 +271,9 @@ class tutorialWindow extends PApplet {
           time = 0;
           progress = 0;
           counter = 0;
+          ready = false;
+          startTime = millis();
+          boxPos = new PVector(720, 316);
         }
       } else {
         fill(themeTertiary);
@@ -272,5 +294,11 @@ class tutorialWindow extends PApplet {
   }
   void mousePressed() {
     mouseClick = true;
+    if (mouseX > boxPos.x-50 && mouseX < boxPos.x+50 && mouseY > boxPos.y-50 && mouseY < boxPos.y+50) {
+      follow = true;
+    }
+  }
+  void mouseReleased() {
+    follow = false;
   }
 }

@@ -8,6 +8,8 @@ class keyboardWindow extends PApplet {
   int smallButtonSize = 80;
   String[][] keyboardKeys = {{"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "+", "DELETE"}, {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "Å", "ENTER"}, {"A", "S", "D", "F", "G", "H", "J", "K", "L", "Æ", "Ø"}, {"Z", "X", "C", "V", "B", "N", "M", ",", ".", "-", "CAPS"}};
   int[][] keyDecimalValues = {{49, 50, 51, 52, 53, 54, 55, 56, 57, 48, -5}, {81, 87, 69, 82, 84, 89, 85, 73, 79, 80, -1}, {65, 83, 68, 70, 71, 72, 74, 75, 76, -2, -3}, {90, 88, 67, 86, 66, 78, 77, 44, 46, 45, -4}};
+  String[][] mathKeys = {{"7", "8", "9", "÷", "%"}, {"4", "5", "6", "*", "."}, {"1", "2", "3", "-", "("}, {"0", "DEL", "=", "+", ")"}};
+  int[][] mathDecimalValues = {{55, 56, 57, -7, -8}, {52, 53, 54, -6, 46}, {49, 50, 51, 45, -1}, {48, -3, -4, -5, -2}};
   boolean keyPressReady = true;
   boolean capslock = false;
   int keyboardMode = 0;
@@ -116,6 +118,9 @@ class keyboardWindow extends PApplet {
 
         if (mouseX > 10+11*(smallButtonSize+10) && mouseY < 10+11*(smallButtonSize+10)+smallButtonSize*2 && mouseY > 10+3*(smallButtonSize+10) && mouseY < 10+3*(smallButtonSize+10)+smallButtonSize) {
           fill(themeSecondary, alpha);
+          if (capslock) {
+            fill(text, alpha);
+          }
           if (hand.gesture == 2 && keyPressReady) {
             keyPressReady = false;
             robot.keyPress(KeyEvent.VK_CAPS_LOCK);
@@ -124,12 +129,19 @@ class keyboardWindow extends PApplet {
           }
         } else {
           fill(themeTertiary, alpha);
+          if (capslock) {
+            fill(text, alpha);
+          }
         }
         rect(10+11*(smallButtonSize+10), 10+3*(smallButtonSize+10), smallButtonSize*2, smallButtonSize, 5);
 
         fill(text);
         text(keyboardKeys[0][11], 10+11*(smallButtonSize+10)+smallButtonSize, 10+smallButtonSize/2);
         text(keyboardKeys[1][11], 10+1*0.33333*(smallButtonSize+10)+11*(smallButtonSize+10)+(smallButtonSize+smallButtonSize*2*(0.33333)-3.33333)/2, 10+1*(smallButtonSize+10)+smallButtonSize/2);
+        if (capslock) {
+          fill(abs(brightness(text)-255));
+          println(text);
+        }
         text(keyboardKeys[3][10], 10+3*0.3333*(smallButtonSize+10)+10*(smallButtonSize+10)+smallButtonSize, 10+3*(smallButtonSize+10)+smallButtonSize/2);
 
         if (mouseX > width/4 && mouseX < width-width/4 && mouseY > height-10-smallButtonSize && mouseY < height-10) {
@@ -146,6 +158,78 @@ class keyboardWindow extends PApplet {
 
         fill(text);
         text("SPACE", width/2, height-10-smallButtonSize/2);
+      } else if (keyboardMode == 1) {
+        textAlign(CENTER, CENTER);
+        textFont(light, 32);
+        for (int i = 0; i < 5; i++) {
+          for (int j = 0; j < 4; j++) {
+            if (mouseX > width/2-2.5*smallButtonSize-20+i*(smallButtonSize+10) && mouseX < width/2-2.5*smallButtonSize-20+i*(smallButtonSize+10)+smallButtonSize && mouseY > 10+j*(smallButtonSize+10) && mouseY < 10+j*(smallButtonSize+10)+smallButtonSize) {
+              fill(themeSecondary, alpha);
+              if (hand.gesture == 2 && keyPressReady) {
+                keyPressReady = false;
+                if (mathDecimalValues[j][i] >= 0) {
+                  robot.keyPress(mathDecimalValues[j][i]);
+                  robot.keyRelease(mathDecimalValues[j][i]);
+                } else if (mathDecimalValues[j][i] == -1) {
+                  specialKey("(");
+                } else if (mathDecimalValues[j][i] == -2) {
+                  specialKey(")");
+                } else if (mathDecimalValues[j][i] == -3) {
+                  robot.keyPress(KeyEvent.VK_BACK_SPACE);
+                  robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+                } else if (mathDecimalValues[j][i] == -4) {
+                  specialKey("=");
+                } else if (mathDecimalValues[j][i] == -5) {
+                  robot.keyPress(KeyEvent.VK_ADD);
+                  robot.keyRelease(KeyEvent.VK_ADD);
+                } else if (mathDecimalValues[j][i] == -6) {
+                  specialKey("*");
+                } else if (mathDecimalValues[j][i] == -7) {
+                  specialKey("/");
+                } else if (mathDecimalValues[j][i] == -8) {
+                  specialKey("%");
+                }
+              }
+            } else {
+              fill(themeTertiary, alpha);
+            }
+            rect(width/2-2.5*smallButtonSize-20+i*(smallButtonSize+10), 10+j*(smallButtonSize+10), smallButtonSize, smallButtonSize, 5);
+            fill(text);
+            text(mathKeys[j][i], width/2-2.5*smallButtonSize-20+i*(smallButtonSize+10)+smallButtonSize/2, 10+j*(smallButtonSize+10)+smallButtonSize/2);
+          }
+        }
+
+        if (mouseX > width/2-2.5*smallButtonSize-20 && mouseX < width/2-2.5*smallButtonSize-20+440 && mouseY > 370 && mouseY < 450) {
+          fill(themeSecondary);
+          if (hand.gesture == 2 && keyPressReady) {
+            keyPressReady = false;
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+          }
+        } else {
+          fill(themeTertiary);
+        }
+        rect(width/2-2.5*smallButtonSize-20, 370, 440, smallButtonSize, 5);
+
+        fill(text);
+        text("ENTER", width/2, 410);
+      }
+
+      if (mouseX > width-width/4+10 && mouseX < width-width/4+10+272.5 && mouseY > height-10-smallButtonSize && mouseY < height-10) {
+        fill(themeSecondary, alpha);
+        if (hand.gesture == 2 && keyPressReady) {
+          keyPressReady = false;
+          keyboardMode = (keyboardMode+1) % 2;
+        }
+      } else {
+        fill(themeTertiary, alpha);
+      }
+      rect(width-width/4+10, height-10-smallButtonSize, 272.5, smallButtonSize, 5);
+      fill(text);
+      if (keyboardMode == 0) {
+        text("MATH", width-width/4+10+136.25, height-10-smallButtonSize/2);
+      } else if (keyboardMode == 1) {
+        text("STANDARD", width-width/4+10+136.25, height-10-smallButtonSize/2);
       }
 
       yPosP = int(yPos);
