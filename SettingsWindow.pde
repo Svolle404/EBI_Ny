@@ -5,7 +5,7 @@ class settingsWindow extends PApplet {
   String[] buttonText = {"Gesture", "Keyboard", "Menu", "Theme"};
   int tab = 0;
   float ballSlide = 0;
-  PVector dragStart;
+  PVector dragStart = new PVector();
 
   PSurface initSurface() {
     PSurface pSurface = super.initSurface();

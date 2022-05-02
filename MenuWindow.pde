@@ -76,9 +76,13 @@ class menuWindow extends PApplet {
             tutorialW.running = true;
             tutorialW.time = 0;
             tutorialW.step = 0;
+            tutorialW.progress = 0;
+            tutorialW.scrollCounter = 0;
+            tutorialW.counter = 0;
             settingsW.getSurface().setVisible(false);
             settingsW.stop();
             settingsW.running = false;
+            // HVORFOR VIRKER DET HER IKKE
           }
         }
         if (i == 0 && mouseClick) {

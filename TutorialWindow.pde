@@ -59,14 +59,14 @@ class tutorialWindow extends PApplet {
         textFont(light, 32);
         text("The neutral position is used to make sure the program doesn't register unwanted inputs. Try try doing the neutral gesture for 10 seconds.", width/2+10, 10, 460, 460);
 
-        if (hand.gesture == 0 && ready) {
-          startTime = millis();
-          ready = false;
-        }
+        //if (hand.gesture == 0 && ready) {
+        //  startTime = millis();
+        //  ready = false;
+        //}
 
-        if (hand.gesture != 0 && !ready) {
-          ready = true;
-        }
+        //if (hand.gesture != 0 && !ready) {
+        //  ready = true;
+        //}
 
         if (hand.gesture == 0) {
           int timeTemp = millis()-startTime;
@@ -224,7 +224,7 @@ class tutorialWindow extends PApplet {
 
         textAlign(LEFT, TOP);
         textFont(light, 32);
-        text("To click and drag you have to raise your pointer and pinky finger, and lower your ring and middle finger. Moving the cursor is the same, and the cursor will still go to the tip of your pointer finger. Try dragging the box below around.", width/2+10, 10, 460, 460);
+        text("To click and drag you have to raise your pointer and pinky finger, and lower your ring and middle finger. Try dragging the box below around.", width/2+10, 10, 460, 460);
       }
 
       noStroke();
@@ -257,7 +257,6 @@ class tutorialWindow extends PApplet {
         fill(themeTertiary);
       }
       rect(width-154, height-58, 144, 48, 5);
-
 
       fill(text);
       textFont(light, 32);
