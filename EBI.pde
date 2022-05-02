@@ -65,13 +65,15 @@ void setup() {
   } 
   catch (Throwable e) {
   }
-  if (settings.returningUser) {
+  if (!settings.returningUser) {
+    settings.returningUser = true;
+    settings.save();
+  } else {
     tutorialW.getSurface().setVisible(false);
     tutorialW.stop();
     tutorialW.running = false;
-    settings.returningUser = true;
-    settings.save();
   }
+  
   settingsW.getSurface().setVisible(false);
   settingsW.stop();
   settingsW.running = false;

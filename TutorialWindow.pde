@@ -8,6 +8,7 @@ class tutorialWindow extends PApplet {
   int startTime = 0;
   int timeTemp = 0;
   int counter = 0;
+  int scrollCounter = 0;
   boolean ready = true;
   float progress = 0;
 
@@ -161,7 +162,44 @@ class tutorialWindow extends PApplet {
 
         textAlign(LEFT, TOP);
         textFont(light, 32);
-        text("... Slow taps are recommended for accurate detection.", width/2+10, 10, 460, 460);
+        text("Right clicking is basically the same except you tap the tip of your thumb with your middle finger instead. You can interact with the buttons below by right clicking too.", width/2+10, 10, 460, 460);
+
+        if (hand.gesture == 2 && ready) {
+          startTime = millis();
+          ready = false;
+        }
+
+        if (hand.gesture != 2 && !ready) {
+          ready = true;
+        }
+
+        noStroke();
+        if (mouseX > width-width/4-190 && mouseX < width-width/4-70 && mouseY > height-height/2.5 && mouseY < height-height/2.5+120) {
+          fill(themeSecondary);
+          if (mouseClick) {
+            counter --;
+          }
+        } else {
+          fill(themeTertiary);
+        }
+        rect(width-width/4-190, height-height/2.5, 120, 120, 5);
+
+        if (mouseX > width-width/4+70 && mouseX < width-width/4+190 && mouseY > height-height/2.5 && mouseY < height-height/2.5+120) {
+          fill(themeSecondary);
+          if (mouseClick) {
+            counter ++;
+          }
+        } else {
+          fill(themeTertiary);
+        }
+        rect(width-width/4+70, height-height/2.5, 120, 120, 5);
+
+        fill(255);
+        textAlign(CENTER, CENTER);
+        textFont(lightLarge, 64);
+        text("-", width-width/4-130, height-height/2.5+60);
+        text(counter, width-width/4, height-height/2.5+60);
+        text("+", width-width/4+130, height-height/2.5+60);
       } else if (step == 4) {
         fill(text);
         textAlign(CENTER, CENTER);
@@ -171,7 +209,12 @@ class tutorialWindow extends PApplet {
 
         textAlign(LEFT, TOP);
         textFont(light, 32);
-        text("... Slow taps are recommended for accurate detection.", width/2+10, 10, 460, 460);
+        text("To scroll, raise your pointer and middle finger and lower your ring and pinky finger. While doing this, move your hand up to scroll up or down to scroll down. Try changing the number below by scrolling.", width/2+10, 10, 460, 460);
+
+        fill(255);
+        textAlign(CENTER, CENTER);
+        textFont(lightLarge, 64);
+        text(scrollCounter, width-width/4, height-height/2.5+60);
       } else if (step == 5) {
         fill(text);
         textAlign(CENTER, CENTER);
@@ -181,7 +224,7 @@ class tutorialWindow extends PApplet {
 
         textAlign(LEFT, TOP);
         textFont(light, 32);
-        text("... Slow taps are recommended for accurate detection.", width/2+10, 10, 460, 460);
+        text("To click and drag you have to raise your pointer and pinky finger, and lower your ring and middle finger. Moving the cursor is the same, and the cursor will still go to the tip of your pointer finger. Try dragging the box below around.", width/2+10, 10, 460, 460);
       }
 
       noStroke();
@@ -195,6 +238,7 @@ class tutorialWindow extends PApplet {
           time = 0;
           progress = 0;
           counter = 0;
+          scrollCounter = 0;
         }
       } else {
         fill(themeTertiary);
@@ -222,6 +266,10 @@ class tutorialWindow extends PApplet {
       text("Next", width-82, height-34);
     }
     mouseClick = false;
+  }
+  void mouseWheel(MouseEvent scroll) {
+    float s = scroll.getCount();
+    scrollCounter -= s;
   }
   void mousePressed() {
     mouseClick = true;
