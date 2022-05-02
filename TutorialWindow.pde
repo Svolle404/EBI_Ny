@@ -16,6 +16,7 @@ class tutorialWindow extends PApplet {
   void setup() {
     frameRate(999);
     surface.setAlwaysOnTop(true);
+    surface.setTitle("Tutorial");
     surface.setLocation(displayWidth/2-480, displayHeight/2-240);
     surface.setIcon(logo);
   }

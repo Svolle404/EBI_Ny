@@ -21,6 +21,7 @@ class settingsWindow extends PApplet {
   void setup() {
     frameRate(999);
     surface.setAlwaysOnTop(true);
+    surface.setTitle("Settings");
     surface.setLocation(displayWidth/2-480, displayHeight/2-240);
     surface.setIcon(logo);
     if (!settings.showGesture) {

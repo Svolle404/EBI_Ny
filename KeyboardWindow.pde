@@ -26,6 +26,7 @@ class keyboardWindow extends PApplet {
   void setup() {
     frameRate(999);
     surface.setAlwaysOnTop(true);
+    surface.setTitle("Keyboard");
     if (settings.keyboard == 1) {
       yPos = -440;
       surface.setLocation(displayWidth/2-585, int(yPos));
@@ -132,16 +133,19 @@ class keyboardWindow extends PApplet {
         text(keyboardKeys[3][10], 10+3*0.3333*(smallButtonSize+10)+10*(smallButtonSize+10)+smallButtonSize, 10+3*(smallButtonSize+10)+smallButtonSize/2);
 
         if (mouseX > width/4 && mouseX < width-width/4 && mouseY > height-10-smallButtonSize && mouseY < height-10) {
-          fill(themeSecondary);
+          fill(themeSecondary, alpha);
           if (hand.gesture == 2 && keyPressReady) {
             keyPressReady = false;
             robot.keyPress(KeyEvent.VK_SPACE);
             robot.keyRelease(KeyEvent.VK_SPACE);
           }
         } else {
-          fill(themeTertiary);
+          fill(themeTertiary, alpha);
         }
         rect(width/4, height-10-smallButtonSize, width/2, smallButtonSize, 5);
+
+        fill(text);
+        text("SPACE", width/2, height-10-smallButtonSize/2);
       }
 
       yPosP = int(yPos);

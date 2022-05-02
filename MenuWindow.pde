@@ -20,6 +20,7 @@ class menuWindow extends PApplet {
   void setup() {
     frameRate(999);
     surface.setAlwaysOnTop(true);
+    surface.setTitle("Menu");
     if (settings.menu == 1) {
       xPos = -236;
     } else if (settings.menu == 2) {

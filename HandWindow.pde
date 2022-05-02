@@ -16,6 +16,7 @@ class handWindow extends PApplet {
   void setup() {
     frameRate(999);
     surface.setAlwaysOnTop(true);
+    surface.setTitle("Gesture");
     if (settings.showGesture == false) {
       handW.getSurface().setVisible(false);
       handW.stop();
