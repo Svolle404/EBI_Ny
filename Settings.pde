@@ -1,4 +1,5 @@
 class settings {
+  // Diverse variabler oprettes.
   int gesture = 0;
   boolean showGesture = true;
   int keyboard = 0;
@@ -9,6 +10,7 @@ class settings {
   int b = 60;
 
   void load() {
+    // De enkelte linjer i tekstfilen settings.txt bliver indlæst i et string array, hvorefter værdierne fordeles på diverse variabler.
     String[] data = loadStrings("/settings.txt");
     gesture = int(data[0]);
     showGesture = boolean(int(data[1]));
@@ -19,6 +21,8 @@ class settings {
     g = int(data[6]);
     b = int(data[7]);
     themePrimary = color(r, g, b);
+    
+    // Programmets sekundære og tertiære farve bliver oprettet alt efter hvor lys den primære farve er.
     if (brightness(themePrimary) > 160) {
       text = color(0);
       checkmark = loadImage("checkmarkBlackSmall.png");
@@ -33,6 +37,8 @@ class settings {
       themeTertiary = color((r+20)*1.2, (g+20)*1.2, (b+20)*1.2);
     }
   }
+  
+  // Hvis der ændres på programmets indstillinger bliver metoden saven kaldt med det samme for at gemme ændringerne.
   void save() {
     int themeR = themePrimary >> 16 & 0xFF;
     int themeG = themePrimary >> 8 & 0xFF;
@@ -41,6 +47,8 @@ class settings {
     String[] data = split(variables, ' ');
     saveStrings("settings.txt", data);
   }
+  
+  // Hvis programmets primære farve ændres bliver den sekundære og tertiære farve opdateret med metoden updateTheme.
   void updateTheme() {
     float themeR = themePrimary >> 16 & 0xFF;
     float themeG = themePrimary >> 8 & 0xFF;

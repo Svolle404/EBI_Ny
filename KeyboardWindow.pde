@@ -1,4 +1,5 @@
 class keyboardWindow extends PApplet {
+  // Diverse variabler oprettes.
   boolean running = true;
   boolean visible = true;
   boolean mouseOver = false;
@@ -9,11 +10,12 @@ class keyboardWindow extends PApplet {
   String[][] keyboardKeys = {{"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "+", "DELETE"}, {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "Å", "ENTER"}, {"A", "S", "D", "F", "G", "H", "J", "K", "L", "Æ", "Ø"}, {"Z", "X", "C", "V", "B", "N", "M", ",", ".", "-", "CAPS"}};
   int[][] keyDecimalValues = {{49, 50, 51, 52, 53, 54, 55, 56, 57, 48, -5}, {81, 87, 69, 82, 84, 89, 85, 73, 79, 80, -1}, {65, 83, 68, 70, 71, 72, 74, 75, 76, -2, -3}, {90, 88, 67, 86, 66, 78, 77, 44, 46, 45, -4}};
   String[][] mathKeys = {{"7", "8", "9", "÷", "%"}, {"4", "5", "6", "*", "."}, {"1", "2", "3", "-", "("}, {"0", "DEL", "=", "+", ")"}};
-  int[][] mathDecimalValues = {{55, 56, 57, -7, -8}, {52, 53, 54, -6, 46}, {49, 50, 51, 45, -1}, {48, -3, -4, -5, -2}};
+  int[][] mathDecimalValues = {{55, 56, 57, -7, -8}, {52, 53, 54, -6, 46}, {49, 50, 51, 45, -1}, {48, -3, -999, -4, -2}};
   boolean keyPressReady = true;
   boolean capslock = false;
   int keyboardMode = 0;
 
+  // Vinduets kanter fjernes.
   PSurface initSurface() {
     PSurface pSurface = super.initSurface();
     PSurfaceAWT awtSurface = (PSurfaceAWT) surface;
@@ -29,6 +31,8 @@ class keyboardWindow extends PApplet {
     frameRate(999);
     surface.setAlwaysOnTop(true);
     surface.setTitle("Keyboard");
+    
+    // Tastaturets position sættes til hvad end brugeren har valgt.
     if (settings.keyboard == 1) {
       yPos = -440;
       surface.setLocation(displayWidth/2-585, int(yPos));
@@ -43,6 +47,7 @@ class keyboardWindow extends PApplet {
       background(themePrimary);
       noStroke();
       if (keyboardMode == 0) {
+        // En indlejret for-løkke tegner de små taster på tastaturet samt tjekker om brugeren holder musen over dem eller trykker på dem.
         for (int i = 0; i < 11; i++) {
           for (int j = 0; j < 4; j++) {
             if (j == 3 && i == 10) {
@@ -52,9 +57,11 @@ class keyboardWindow extends PApplet {
                 if (hand.gesture == 2 && keyPressReady) {
                   keyPressReady = false;
                   if (keyDecimalValues[j][i] >= 0) {
+                    // Hvis en knap bliver trykket på simuleres et tastetryk.
                     robot.keyPress(keyDecimalValues[j][i]);
                     robot.keyRelease(keyDecimalValues[j][i]);
                   } else {
+                    // Ved særtilfælde bruges en anden metode til at skrive bogstaverne.
                     if (keyDecimalValues[j][i] == -1) {
                       if (capslock) {
                         specialKey("Å");
@@ -74,7 +81,6 @@ class keyboardWindow extends PApplet {
                         specialKey("ø");
                       }
                     } else if (keyDecimalValues[j][i] == -4) {
-                    } else if (keyDecimalValues[j][i] == -5) {
                       robot.keyPress(KeyEvent.VK_ADD);
                       robot.keyRelease(KeyEvent.VK_ADD);
                     }
@@ -91,6 +97,7 @@ class keyboardWindow extends PApplet {
             }
           }
         }
+        // Alle tasterne med specielle forme tegnes manuelt.
         if (mouseX > 10+11*(smallButtonSize+10) && mouseY < 10+11*(smallButtonSize+10)+smallButtonSize*2 && mouseY > 10 && mouseY < 10+smallButtonSize) {
           fill(themeSecondary, alpha);
           if (hand.gesture == 2 && keyPressReady) {
@@ -140,7 +147,6 @@ class keyboardWindow extends PApplet {
         text(keyboardKeys[1][11], 10+1*0.33333*(smallButtonSize+10)+11*(smallButtonSize+10)+(smallButtonSize+smallButtonSize*2*(0.33333)-3.33333)/2, 10+1*(smallButtonSize+10)+smallButtonSize/2);
         if (capslock) {
           fill(abs(brightness(text)-255));
-          println(text);
         }
         text(keyboardKeys[3][10], 10+3*0.3333*(smallButtonSize+10)+10*(smallButtonSize+10)+smallButtonSize, 10+3*(smallButtonSize+10)+smallButtonSize/2);
 
@@ -159,6 +165,7 @@ class keyboardWindow extends PApplet {
         fill(text);
         text("SPACE", width/2, height-10-smallButtonSize/2);
       } else if (keyboardMode == 1) {
+        // Matematik tastaturets taster tegnes også med en indlejret for-løkke.
         textAlign(CENTER, CENTER);
         textFont(light, 32);
         for (int i = 0; i < 5; i++) {
@@ -170,6 +177,8 @@ class keyboardWindow extends PApplet {
                 if (mathDecimalValues[j][i] >= 0) {
                   robot.keyPress(mathDecimalValues[j][i]);
                   robot.keyRelease(mathDecimalValues[j][i]);
+                  
+                 // Ved særtilfælde bruges der igen en anden metode til at skrive tegnene.
                 } else if (mathDecimalValues[j][i] == -1) {
                   specialKey("(");
                 } else if (mathDecimalValues[j][i] == -2) {
@@ -200,7 +209,7 @@ class keyboardWindow extends PApplet {
         }
 
         if (mouseX > width/2-2.5*smallButtonSize-20 && mouseX < width/2-2.5*smallButtonSize-20+440 && mouseY > 370 && mouseY < 450) {
-          fill(themeSecondary);
+          fill(themeSecondary, alpha);
           if (hand.gesture == 2 && keyPressReady) {
             keyPressReady = false;
             robot.keyPress(KeyEvent.VK_ENTER);
@@ -234,6 +243,8 @@ class keyboardWindow extends PApplet {
 
       yPosP = int(yPos);
 
+      // Hvis musen er over den lille del af tastaturet der stikker ud, så
+      // udvider det sig, så man kan se hele tastaturet.
       if (mouseOver) {
         alpha = lerp(alpha, 255, 0.025);
         if (settings.keyboard == 1) {
@@ -255,6 +266,9 @@ class keyboardWindow extends PApplet {
       }
     }
   }
+  
+  // Metoden specialKey bruges til at skrive de tegn, som ikke kan skrives med simulerede tastatryk. Det er
+  // i bund og grund bare en kompliceret måde at copy/paste en string.
   void specialKey(String k) {
     Toolkit toolkit = Toolkit.getDefaultToolkit();
     Clipboard clipboard = toolkit.getSystemClipboard();
@@ -265,6 +279,8 @@ class keyboardWindow extends PApplet {
     robot.keyRelease(KeyEvent.VK_V);
     robot.keyRelease(KeyEvent.VK_CONTROL);
   }
+
+  // Metoden update kaldes hvis brugeren har ændret på tastaturets position.
   void update() {
     if (settings.keyboard == 1) {
       yPos = -440;

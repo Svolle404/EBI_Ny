@@ -1,9 +1,11 @@
 class computer {
+  // Diverse variabler oprettes.
   boolean leftclickReady = false;
   boolean rightclickReady = false;
   boolean dragReady = false;
   int scrollStartY = 0;
 
+  // Metoden interact styrer computeren alt efter hvilket håndtegn der registreres.
   void interact() {
     if (hand.leftclick && leftclickReady) {
       if (!keyboardW.mouseOver) {

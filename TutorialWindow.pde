@@ -1,4 +1,5 @@
 class tutorialWindow extends PApplet {
+  // Diverse variabler oprettes.
   PImage[] handsHD = new PImage[6];
   boolean running = true;
   boolean visible = true;
@@ -14,6 +15,7 @@ class tutorialWindow extends PApplet {
   PVector boxPos = new PVector(720, 316);
   boolean follow = false;
 
+  // Vinduets kanter fjernes.
   PSurface initSurface() {
     PSurface pSurface = super.initSurface();
     PSurfaceAWT awtSurface = (PSurfaceAWT) surface;
@@ -70,6 +72,7 @@ class tutorialWindow extends PApplet {
           ready = true;
         }
 
+        // Hvis brugeren viser det neutrale håndtegn begynder programmet at tælle, hvor længe håndtegnet er vist.
         if (hand.gesture == 0) {
           int timeTemp = millis()-startTime;
           time += timeTemp;
@@ -80,6 +83,7 @@ class tutorialWindow extends PApplet {
         fill(themeTertiary);
         rect(width/2+60, height-height/3, 360, 48, 5);
 
+        // Progressbarens længde opdateres.
         progress = 360*(float(time)/10000.0);
         progress = constrain(progress, 0, 360);
 
@@ -96,6 +100,7 @@ class tutorialWindow extends PApplet {
         textFont(light, 32);
         text("To move the cursor you just have to raise your pointer finger. The cursor will automatically go to the tip of your finger. Try moving the cursor around.", width/2+10, 10, 460, 460);
 
+        // Hvis brugeren viser håndtegnet der flytter musen, så tæller programmet hvor mange pixels man har flyttet musen.
         if (hand.gesture == 1) {
           progress += sqrt(sq(hand.landmarks[1][0]-data.px)+sq(hand.landmarks[1][1]-data.py));
         }
@@ -104,6 +109,7 @@ class tutorialWindow extends PApplet {
         fill(themeTertiary);
         rect(width/2+60, height-height/3, 360, 48, 5);
 
+        // Variablen begrænses, så længden af baren ikke bare fortsætter med at vokse.
         progress = constrain(progress, 0, 50000);
 
         fill(themeSecondary);
@@ -132,6 +138,7 @@ class tutorialWindow extends PApplet {
         if (mouseX > width-width/4-190 && mouseX < width-width/4-70 && mouseY > height-height/2.5 && mouseY < height-height/2.5+120) {
           fill(themeSecondary);
           if (mouseClick) {
+            // Hvis brugeren trykker på minus trækkes der 1 fra counter variablen.
             counter --;
           }
         } else {
@@ -142,6 +149,7 @@ class tutorialWindow extends PApplet {
         if (mouseX > width-width/4+70 && mouseX < width-width/4+190 && mouseY > height-height/2.5 && mouseY < height-height/2.5+120) {
           fill(themeSecondary);
           if (mouseClick) {
+            // Hvis brugeren trykker på plus lægges der 1 til counter variablen.
             counter ++;
           }
         } else {
@@ -179,6 +187,7 @@ class tutorialWindow extends PApplet {
         if (mouseX > width-width/4-190 && mouseX < width-width/4-70 && mouseY > height-height/2.5 && mouseY < height-height/2.5+120) {
           fill(themeSecondary);
           if (mouseClick) {
+            // Hvis brugeren trykker på minus trækkes der 1 fra counter variablen.
             counter --;
           }
         } else {
@@ -189,6 +198,7 @@ class tutorialWindow extends PApplet {
         if (mouseX > width-width/4+70 && mouseX < width-width/4+190 && mouseY > height-height/2.5 && mouseY < height-height/2.5+120) {
           fill(themeSecondary);
           if (mouseClick) {
+            // Hvis brugeren trykker på plus lægges der 1 til counter variablen.
             counter ++;
           }
         } else {
@@ -232,6 +242,7 @@ class tutorialWindow extends PApplet {
         fill(themeTertiary);
         rect(width/2+10, height-260, 460, 192, 5);
 
+        // Kassens koordinatsæt bliver sat til musens koordinatsæt, hvis brugeren trykker holder musen nede, og hvis follow er true.
         if (mousePressed && follow) {
           boxPos.set(mouseX, mouseY);
         }
@@ -247,6 +258,7 @@ class tutorialWindow extends PApplet {
       if (mouseX > width/2+10 && mouseX < width/2+154 && mouseY > height-58 && mouseY < height-10) {
         fill(themeSecondary);
         if (mouseClick) {
+          // Når man går frem eller tilbage i tutorialen bliver alle variabler nulstillet.
           step --;
           if (step < 0) {
             step = 5;
@@ -289,16 +301,20 @@ class tutorialWindow extends PApplet {
     mouseClick = false;
   }
   void mouseWheel(MouseEvent scroll) {
+    // Hvis man scroller bliver scrollCounter variablen opdateret.
     float s = scroll.getCount();
     scrollCounter -= s;
   }
   void mousePressed() {
     mouseClick = true;
+    
+    // Hvis man klikker inden for kassens rammer bliver follow sat til true.
     if (mouseX > boxPos.x-50 && mouseX < boxPos.x+50 && mouseY > boxPos.y-50 && mouseY < boxPos.y+50) {
       follow = true;
     }
   }
   void mouseReleased() {
+    // Når man ikke klikker mere bliver follow sat til false.
     follow = false;
   }
 }

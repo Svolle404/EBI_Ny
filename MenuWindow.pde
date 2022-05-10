@@ -1,4 +1,5 @@
 class menuWindow extends PApplet {
+  // Diverse variabler oprettes.
   boolean mouseOver = false;
   float xPos = 0;
   float alpha = 0;
@@ -6,6 +7,7 @@ class menuWindow extends PApplet {
   String[] buttonText = {"Exit", "Tutorial", "Settings", "Keyboard"};
   boolean mouseClick = false;
 
+  // Vinduets kanter fjernes.
   PSurface initSurface() {
     PSurface pSurface = super.initSurface();
     PSurfaceAWT awtSurface = (PSurfaceAWT) surface;
@@ -21,6 +23,8 @@ class menuWindow extends PApplet {
     frameRate(999);
     surface.setAlwaysOnTop(true);
     surface.setTitle("Menu");
+
+    // Menuens position sættes til hvad end brugeren har valgt.
     if (settings.menu == 1) {
       xPos = -236;
     } else if (settings.menu == 2) {
@@ -38,8 +42,10 @@ class menuWindow extends PApplet {
     text("Menu", 128, 71);
 
     noStroke();
+    // Menuens fire knapper tegnes ved hjælp af en for-løkke.
     for (int i = 0; i < 4; i++) {
       if (mouseX > 10 && mouseX < width-10 && mouseY > height-10-i*90-80 && mouseY < height-10-i*90) {
+        // Hver knap "tænder" eller "slukker" for en af de PApplets der kører undtagen den sidste som lukker programmet.
         if (i == 3 && mouseClick) {
           if (keyboardW.running) {
             keyboardW.getSurface().setVisible(false);
@@ -102,6 +108,7 @@ class menuWindow extends PApplet {
 
     xPosP = int(xPos);
 
+    // Hvis man holder musen over den lille del af menuen der er synlig, så "udfolder" den sig så man kan se hele menuen.
     if (mouseOver) {
       if (settings.menu == 1) {
         xPos = lerp(xPos, 0, 0.1);
@@ -124,6 +131,8 @@ class menuWindow extends PApplet {
 
     mouseClick = false;
   }
+  
+  // Hvis brugeren ændrer på menuen position bliver metoden update kaldt bagefter for at opdateres menuens position på skærmen.
   void update() {
     if (settings.menu == 1) {
       xPos = -236;

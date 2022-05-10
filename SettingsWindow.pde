@@ -1,4 +1,5 @@
 class settingsWindow extends PApplet {
+  // Diverse variabler oprettes.
   boolean running = true;
   boolean visible = true;
   boolean mouseClick = false;
@@ -7,6 +8,7 @@ class settingsWindow extends PApplet {
   float ballSlide = 0;
   PVector dragStart = new PVector();
 
+  // Vinduets kanter fjernes.
   PSurface initSurface() {
     PSurface pSurface = super.initSurface();
     PSurfaceAWT awtSurface = (PSurfaceAWT) surface;
@@ -53,12 +55,14 @@ class settingsWindow extends PApplet {
       line(width/4, 10, width/4, height-10);
 
       if (tab == 1) {
+        // Håndtegns vinduet.
         fill(text);
         text("Show gesture window", width/4+10, 34);
         text("Window position", width/4+10, 92);
 
         if (dist(mouseX, mouseY, width-29, 34) < 19 || dist(mouseX, mouseY, width-29-32, 34) < 19 || mouseX > width-29-32 && mouseX < width-29 && mouseY > 15 && mouseY < 53) {
           if (mouseClick) {
+            // Indstillingerne gemmes.
             settings.showGesture = !settings.showGesture;
             settings.save();
             handW.update();
@@ -83,6 +87,7 @@ class settingsWindow extends PApplet {
         if (mouseX > width/4+55 && mouseX < width/4+55+300 && mouseY > 150 && mouseY < 300) {
           fill(themeSecondary);
           if (mouseClick) {
+            // Indstillingerne gemmes.
             settings.gesture = 1;
             settings.save();
             handW.update();
@@ -95,6 +100,7 @@ class settingsWindow extends PApplet {
         if (mouseX > width/4+55+310 && mouseX < width/4+55+310+300 && mouseY > 150 && mouseY < 300) {
           fill(themeSecondary);
           if (mouseClick) {
+            // Indstillingerne gemmes.
             settings.gesture = 2;
             settings.save();
             handW.update();
@@ -107,6 +113,7 @@ class settingsWindow extends PApplet {
         if (mouseX > width/4+55 && mouseX < width/4+55+300 && mouseY > 310 && mouseY < 460) {
           fill(themeSecondary);
           if (mouseClick) {
+            // Indstillingerne gemmes.
             settings.gesture = 3;
             settings.save();
             handW.update();
@@ -119,6 +126,7 @@ class settingsWindow extends PApplet {
         if (mouseX > width/4+55+310 && mouseX < width/4+55+310+300 && mouseY > 310 && mouseY < 460) {
           fill(themeSecondary);
           if (mouseClick) {
+            // Indstillingerne gemmes.
             settings.gesture = 4;
             settings.save();
             handW.update();
@@ -144,6 +152,7 @@ class settingsWindow extends PApplet {
           image(checkmark, width/4+490, 360);
         }
       } else if (tab == 2) {
+        // Tastaturet.
         fill(text);
         text("Keyboard position", width/4+10, 34);
 
@@ -151,6 +160,7 @@ class settingsWindow extends PApplet {
         if (mouseX > width/4+200 && mouseX < width/4+500 && mouseY > 92 && mouseY < 242) {
           fill(themeSecondary);
           if (mouseClick) {
+            // Indstillingerne gemmes.
             settings.keyboard = 1;
             settings.save();
             keyboardW.update();
@@ -163,6 +173,7 @@ class settingsWindow extends PApplet {
         if (mouseX > width/4+200 && mouseX < width/4+500 && mouseY > 252 && mouseY < 402) {
           fill(themeSecondary);
           if (mouseClick) {
+            // Indstillingerne gemmes.
             settings.keyboard = 2;
             settings.save();
             keyboardW.update();
@@ -182,6 +193,7 @@ class settingsWindow extends PApplet {
           image(checkmark, width/4+325, 277);
         }
       } else if (tab == 3) {
+        // Menuen.
         fill(text);
         text("Menu position", width/4+10, 34);
 
@@ -189,6 +201,7 @@ class settingsWindow extends PApplet {
         if (mouseX > width/4+55 && mouseX < width/4+355 && mouseY > 92 && mouseY < 242) {
           fill(themeSecondary);
           if (mouseClick) {
+            // Indstillingerne gemmes.
             settings.menu = 1;
             settings.save();
             menuW.update();
@@ -201,6 +214,7 @@ class settingsWindow extends PApplet {
         if (mouseX > width/4+365 && mouseX < width/4+665 && mouseY > 92 && mouseY < 242) {
           fill(themeSecondary);
           if (mouseClick) {
+            // Indstillingerne gemmes.
             settings.menu = 2;
             settings.save();
             menuW.update();
@@ -220,6 +234,7 @@ class settingsWindow extends PApplet {
           image(checkmark, width/4+365+125, 142);
         }
       } else if (tab == 4) {
+        // Programmets farver.
         fill(text);
         text("Red", width/4+10, 34);
         text("Green", width/4+10, 92);
@@ -264,6 +279,7 @@ class settingsWindow extends PApplet {
         }
 
         if (mousePressed) {
+          // Hvis brugeren trykker på hvor som helst på denne side bliver følgende metoder kaldt.
           settings.updateTheme();
           settings.save();
         }

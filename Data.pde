@@ -1,10 +1,15 @@
 class data {
+  // Diverse variabler oprettes.
   int time = 0;
   int px = 0;
   int py = 0;
 
   void load() {
+    // De enkelte linjer i tekstfilen data.txt bliver indlæst i et string array.
     String[] data = loadStrings("C:/Users/Berith Svoldgade/PycharmProjects/pythonProject/data.txt");
+    
+    // Hvis arrayet har en længde på mere end 4 - altså hvis der er koordinatsæt til alle fingre - så
+    // bliver de fordelt i fem individuelle integer arrays; et til hver finger.
     if (data.length > 4) {
       int[] finger1 = int(split(data[0], ' '));
       int[] finger2 = int(split(data[1], ' '));
@@ -18,6 +23,7 @@ class data {
         py = hand.landmarks[1][1];
       }
 
+      // Koordinatsættene bliver sendt over til et todimensionelt integer array i klassen hand.
       hand.landmarks[0][0] = finger1[0];
       hand.landmarks[0][1] = finger1[1];
       hand.landmarks[1][0] = finger2[0];
